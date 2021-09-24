@@ -26,19 +26,24 @@ class _EnterMobileNumberState extends State<EnterMobileNumber> {
             "Please enter your mobile Number",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
-          const Text(
-            "You'll recieve a 4 digit code to verify next.",
-            style: TextStyle(fontWeight: FontWeight.w400),
+          const SizedBox(height: 20),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.5,
+            child: const Text(
+              "You'll recieve a 4 digit code to verify next.",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.w400),
+            ),
           ),
           const SizedBox(height: 40),
           Container(
             width: MediaQuery.of(context).size.width * 0.95,
-            height: MediaQuery.of(context).size.width * 0.2,
+            height: MediaQuery.of(context).size.width * 0.15,
             decoration: BoxDecoration(border: Border.all(color: Colors.black)),
             child: Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(1.0),
                   child: CountryCodePicker(
                     onChanged: print,
                     // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
@@ -52,8 +57,6 @@ class _EnterMobileNumberState extends State<EnterMobileNumber> {
                     alignLeft: false,
                   ),
                 ),
-              
-               
                 Expanded(
                   flex: 1,
                   child: TextFormField(
