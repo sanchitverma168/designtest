@@ -28,6 +28,7 @@ class _EnterMobileNumberState extends State<EnterMobileNumber> {
           ),
           const SizedBox(height: 20),
           Container(
+            decoration: const BoxDecoration(),
             width: MediaQuery.of(context).size.width * 0.5,
             child: const Text(
               "You'll recieve a 4 digit code to verify next.",

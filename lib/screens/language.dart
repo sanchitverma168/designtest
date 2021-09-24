@@ -44,6 +44,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
             )),
         const SizedBox(height: 10),
         Container(
+            decoration: const BoxDecoration(),
             // color: Colors.orange,
             width: MediaQuery.of(context).size.width * 0.45,
             child: const Text("You can change the language at any time",
