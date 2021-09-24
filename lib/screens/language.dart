@@ -19,8 +19,8 @@ class _SelectLanguageState extends State<SelectLanguage> {
       body: Stack(
         children: [
           Center(child: content()),
-          aquaPath(),
-          overLapPath(),
+          Align(alignment: Alignment.bottomCenter, child: overLapPath()),
+          Align(alignment: Alignment.bottomCenter, child: aquaPath()),
         ],
       ),
     );
@@ -77,15 +77,100 @@ class _SelectLanguageState extends State<SelectLanguage> {
         decoration: BoxDecoration(border: Border.all(color: Colors.black)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: LanguagePickerDropdown(onValuePicked: (Language language) {}),
+          child: LanguagePickerDropdown(
+              initialValue: Language("en", "English"),
+              onValuePicked: (Language language) {}),
         ));
   }
 
   Widget aquaPath() {
-    return const ClipPath();
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.15,
+      child: ClipPath(
+          clipper: BackgroundClipper(),
+          child: Container(
+            // height: MediaQuery.of(context).size.height * 0.2,
+            width: MediaQuery.of(context).size.width,
+            color: const Color.fromRGBO(46, 59, 98, 0.5),
+          )),
+    );
   }
 
   Widget overLapPath() {
-    return const ClipPath();
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.15,
+      child: ClipPath(
+          clipper: OverLapBackgroundClipper(),
+          child: Container(
+            // height: MediaQuery.of(context).size.height * 0.2,
+            width: MediaQuery.of(context).size.width,
+            color: const Color.fromRGBO(147, 210, 243, 1),
+          )),
+    );
+  }
+}
+
+class BackgroundClipper extends CustomClipper<Path> {
+  @override
+  getClip(Size size) {
+   
+    Path p = Path();
+    p.moveTo(0, size.height * 0.3);
+    var fEndPoint = Offset(size.width * 0.4, size.height * 0.3);
+    var fControlPoint = Offset(size.width * 0.2, size.height * 0.6);
+    p.quadraticBezierTo(
+        fControlPoint.dx, fControlPoint.dy, fEndPoint.dx, fEndPoint.dy);
+
+    var sEndPoint = Offset(size.width * 0.8, size.height * 0.3);
+    var sControlPoint = Offset(size.width * 0.6, 0);
+    p.quadraticBezierTo(
+        sControlPoint.dx, sControlPoint.dy, sEndPoint.dx, sEndPoint.dy);
+
+    var tEndPoint = Offset(size.width, size.height * 0.38);
+    var tControlPoint = Offset(size.width * 0.9, size.height * 0.42);
+    p.quadraticBezierTo(
+        tControlPoint.dx, tControlPoint.dy, tEndPoint.dx, tEndPoint.dy);
+
+    p.lineTo(size.width, size.height);
+    p.lineTo(0, size.height);
+    p.close();
+    return p;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper oldClipper) {
+    return false;
+  }
+}
+
+class OverLapBackgroundClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path p =  Path();
+     p.moveTo(0, size.height * 0.3);
+    var fEndPoint = Offset(size.width * 0.5, size.height * 0.5);
+    var fControlPoint = Offset(size.width * 0.27, size.height*0.13);
+    p.quadraticBezierTo(
+        fControlPoint.dx, fControlPoint.dy, fEndPoint.dx, fEndPoint.dy);
+
+    var sEndPoint = Offset(size.width , size.height * 0.3);
+    var sControlPoint = Offset(size.width * 0.7, size.height *0.8 );
+    p.quadraticBezierTo(
+        sControlPoint.dx, sControlPoint.dy, sEndPoint.dx, sEndPoint.dy);
+
+    var tEndPoint = Offset(size.width, size.height * 0.38);
+    var tControlPoint = Offset(size.width * 0.9, size.height * 0.1);
+    // p.quadraticBezierTo(
+    //     tControlPoint.dx, tControlPoint.dy, tEndPoint.dx, tEndPoint.dy);
+    // p.lineTo(size.width, size.height*0.3);
+    p.lineTo(size.width, size.height);
+    p.lineTo(0, size.height);
+    p.close();
+    return p;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
   }
 }

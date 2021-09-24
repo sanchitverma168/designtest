@@ -1,6 +1,7 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:designtest/screens/verify_mobilenumber.dart';
 import 'package:designtest/widgets/button_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -15,6 +16,15 @@ class EnterMobileNumber extends StatefulWidget {
 }
 
 class _EnterMobileNumberState extends State<EnterMobileNumber> {
+  Future loginUser() async {
+    if (countrycode == null || mobile == null) {
+      print(true);
+    }
+  }
+
+  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+
+  String countrycode = "+91", mobile = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +56,10 @@ class _EnterMobileNumberState extends State<EnterMobileNumber> {
                 Padding(
                   padding: const EdgeInsets.all(1.0),
                   child: CountryCodePicker(
-                    onChanged: print,
+                    onChanged: (value) {
+                      countrycode = value.toString();
+                      print(countrycode);
+                    },
                     // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
                     initialSelection: 'IN',
                     favorite: const ['+91', 'IN'],
@@ -60,10 +73,20 @@ class _EnterMobileNumberState extends State<EnterMobileNumber> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration.collapsed(
-                        hintText: "Mobile Number"),
+                  child: Form(
+                    key: globalKey,
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Enter Mobile Number";
+                        } else {
+                          mobile = value;
+                        }
+                      },
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration.collapsed(
+                          hintText: "Mobile Number"),
+                    ),
                   ),
                 ),
               ],
@@ -72,10 +95,20 @@ class _EnterMobileNumberState extends State<EnterMobileNumber> {
           const SizedBox(height: 20),
           GestureDetector(
               onTap: () {
+                final form = globalKey.currentState;
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const VerifyMobileNumber()));
+                        builder: (context) =>
+                            VerifyMobileNumber(countrycode, mobile)));
+                // if (form!.validate()) {
+                //   // loginUser();
+                //   Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) =>
+                //               VerifyMobileNumber(countrycode, mobile)));
+                // }
               },
               child: CustomButton("CONTINUE"))
         ],
