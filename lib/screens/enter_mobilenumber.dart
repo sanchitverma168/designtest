@@ -17,16 +17,16 @@ class EnterMobileNumber extends StatefulWidget {
 
 class _EnterMobileNumberState extends State<EnterMobileNumber> {
   Future loginUser() async {
-    if (countrycode == null || mobile == null) {
-      print(true);
-    }
+    // if (countrycode == null || mobile == null) {
+    //   print(true);
+    // }
   }
 
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
 
-  String countrycode = "+91", mobile = "";
   @override
   Widget build(BuildContext context) {
+  String countrycode = "+91", mobile = "";
     return Scaffold(
         body: Center(
       child: Column(
@@ -96,19 +96,19 @@ class _EnterMobileNumberState extends State<EnterMobileNumber> {
           GestureDetector(
               onTap: () {
                 final form = globalKey.currentState;
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            VerifyMobileNumber(countrycode, mobile)));
-                // if (form!.validate()) {
-                //   // loginUser();
-                //   Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //           builder: (context) =>
-                //               VerifyMobileNumber(countrycode, mobile)));
-                // }
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) =>
+                //             VerifyMobileNumber(countrycode, mobile)));
+                if (form!.validate()) {
+                  // loginUser();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              VerifyMobileNumber(countrycode, mobile)));
+                }
               },
               child: CustomButton("CONTINUE"))
         ],

@@ -30,7 +30,7 @@ class _VerifyMobileNumberState extends State<VerifyMobileNumber> {
   @override
   void initState() {
     super.initState();
-    // _verifyPhone();
+    _verifyPhone();
   }
 
   _verifyPhone() async {
